@@ -1,3 +1,3 @@
 <template>
-    这是DIDI陪诊
+    <router-view></router-view>
 </template>

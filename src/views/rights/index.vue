@@ -1,3 +1,3 @@
 <template>
-    这是权限管理
+    <router-view></router-view>
 </template>

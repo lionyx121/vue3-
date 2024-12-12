@@ -8,7 +8,7 @@ import asside from '@/components/asside.vue';
             <asside></asside>
             <el-container>
                 <el-header>Header</el-header>
-                <el-main>Main</el-main>
+                <router-view></router-view>
             </el-container>
         </el-container>
     </div>

@@ -1,13 +1,10 @@
 <script setup>
 import etreeMenu from './etreeMenu.vue';
 
-const handleOpen = () => { }
-const handleClose = () => { }
 </script>
 
 <template>
-    <el-menu active-text-color="#ffd04b" background-color="#545c64" default-active="2" text-color="#fff"
-        @open="handleOpen" @close="handleClose" class="asside-menu">
+    <el-menu active-text-color="#ffd04b" background-color="#545c64" default-active="2" text-color="#fff" class="asside-menu">
         <p class="logo-header">TITI陪诊</p>
         <etreeMenu></etreeMenu>
     </el-menu>
