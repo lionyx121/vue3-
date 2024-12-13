@@ -14,7 +14,7 @@ const router = useRouter()
 
 watch(
     () => routerStore.routerList,
-    () =>{
+    () => {
         dataList.value = routerStore.routerList
         // console.log("dataList", dataList.value)
     },
@@ -23,30 +23,34 @@ watch(
 
 // 组件映射
 const iconMapping = {
-  Monitor: ElIcons.Monitor,
-  Grid: ElIcons.Grid,
-  UserFilled: ElIcons.UserFilled,
-  Edit: ElIcons.Edit,
-  Bell: ElIcons.Bell,
-  Checked: ElIcons.Checked,
-  List: ElIcons.List,
+    Monitor: ElIcons.Monitor,
+    Grid: ElIcons.Grid,
+    UserFilled: ElIcons.UserFilled,
+    Edit: ElIcons.Edit,
+    Bell: ElIcons.Bell,
+    Checked: ElIcons.Checked,
+    List: ElIcons.List,
 };
 
 // 路由跳转
-const goto = async (item) =>{
+const goto = async (item) => {
     await router.push(item.path)
     // console.log(route.fullPath)
 }
 
 // delcet函数
-const handleDelect = (id) =>{
+const handleDelect = (myitem) => {
     // console.log("触发了:", id)
-    dataList.value = dataList.value.filter(item => item.id !== id)
+    dataList.value = dataList.value.filter(item => item.id !== myitem.id)
     routerStore.updateRouterList(dataList.value)
-    if(dataList.value.length !== 0){
-        router.push(dataList.value[dataList.value.length - 1].path)
-    }else{
-        router.push('/')
+
+    // 如果删自己，就要往前移动
+    if (route.fullPath === myitem.path) {
+        if (dataList.value.length !== 0) {
+            router.push(dataList.value[dataList.value.length - 1].path) //如果删完了就直接push到'/'
+        } else {
+            router.push('/')
+        }
     }
 }
 
@@ -62,11 +66,13 @@ const handleDelect = (id) =>{
         </div>
         <div class="content">
             <div class="contentBox" v-for="item in dataList" :key="item.id" @click="goto(item)">
-                <el-icon size="13" :class="{act: route.fullPath === item.path}">
+                <el-icon size="13" :class="{ act: route.fullPath === item.path }">
                     <component :is="iconMapping[item.icon]"></component>
                 </el-icon>
-                <span :class="{act: route.fullPath === item.path}">{{ item.title }}</span>
-                <el-icon class="closee" size="15" @click.stop="handleDelect(item.id)"><Close /></el-icon>
+                <span :class="{ act: route.fullPath === item.path }">{{ item.title }}</span>
+                <el-icon class="closee" size="15" @click.stop="handleDelect(item)">
+                    <Close />
+                </el-icon>
             </div>
         </div>
         <el-dropdown class="dropbox">
@@ -113,23 +119,28 @@ const handleDelect = (id) =>{
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        .contentBox{
+
+        .contentBox {
             width: 120px;
             height: 60px;
             display: flex;
             justify-content: space-around;
             align-items: center;
             cursor: pointer;
-            .closee{
+
+            .closee {
                 visibility: hidden;
             }
-            .act{
+
+            .act {
                 color: #007FFF;
             }
         }
-        .contentBox:hover{
+
+        .contentBox:hover {
             background-color: #f5f5f5;
-            .closee{
+
+            .closee {
                 visibility: inherit;
             }
         }
